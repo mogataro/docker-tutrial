@@ -30,6 +30,46 @@
     そのため、Windows OSやMac OS上でLinuxコンテナを起動できる。
   </p>
 
+  <h2>Windows版 Docker Desktopのインストール</h2>
+
+  <p>Docker DesktopはHyper-Vが必要なため、windows10 pro以上の64bit版OSを使用している場合に利用できる。</p>
+
+  <ol>
+    <li><a href="https://www.docker.com/" target="_blank">Dockerの公式サイト</a>を開いてDocker Desktopのインストーラー(Doccker Desktop
+      Installerというファイル)をダウンロードする。</li>
+    <li>インストールする際に「デバイスに変更を加えることを許可しますか」といった確認画面が出ることがあるが、「はい」を選択。<br />
+      PCの管理者のパスワードを求められた場合もパスワードを入力して進める。</li>
+    <li>インストールが進んで「Configuration」の画面になったら「OK」をクリック。</li>
+    <li>インストールが完了して「Installation succeeded」の画面になったら、PCを再起動する。</li>
+    <li>再起動後にDockerのアプリケーションが自動で立ち上がり、Dockerを使えるようになる。</li>
+  </ol>
+
+  <h2>Windows版Docker Desktopの設定メニュー</h2>
+
+  <p>
+    Docker Desktopが起動してるかどうか確認するにはPC画面右下にクジラのアイコンが出ているかどうかを確認する。<br />
+    クジラのアイコンがアニメーションしている場合はDocker Desktopが起動中のため、止まるまで待つ必要がある。
+  </p>
+
+  <p>
+    Docker Desktopや付属ツールのバージョンは、クジラのアイコンを右クリックして出てくるメニューの「About Docker Desktop」から確認できる。
+  </p>
+
+  <p>
+    メニューの「Settings」では、Docker Desktopの一般的な設定やDockerデーモンが動作しているLinux仮想マシンへのリソースの割り当てなどができる。
+  </p>
+
+  <p>Settings メニュー</p>
+  <ul>
+    <li>General：PCにログインした際のDocker Desktopの自動起動の設定やアップデートのチェックを自動で行うかなどの設定。通常はデフォルトで自動起動になっている。</li>
+    <li>Resources：Dockerデーモンを動かしている仮想マシン関連の設定。</li>
+    <li>ADVANCED：仮想マシンに割り当てるCPUやメモリなどのリソース設定。</li>
+    <li>FILE SHARING：Dockerのバインドマウントという機能で必要になる設定。PCのフォルダをコンテナに共有する際にDockerにフォルダーの共有を許可するなどの設定</li>
+    <li>PROXIES：Dockerイメージというコンテナの起動に必要なファイルをインターネットから取得する際に使用するプロキシの設定。PCを直接インターネットに繋げられない環境の場合に設定するもの。</li>
+    <li>Kubernetes：Docker DesktopでKubernetesを動作させたい場合に設定を行う。</li>
+  </ul>
+
+  <h2>Windows版 DockerDesktopの動作確認</h2>
 </body>
 
 </html>
