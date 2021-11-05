@@ -3,8 +3,32 @@
 
 <body>
 
-  <h1>Dockerをインストールする</h1>
+  <h1>Dockerのインストール</h1>
 
+  <h2>WindowsやMacでのLinuxコンテナの動き方</h2>
+
+  <div>
+    <img src="./img/docker_001.png" alt="PCでのDocker実行環境の図" title="PCでのDocker実行環境">
+  </div>
+
+  <p>
+    Dockerを使うにはDockerコマンドをクライアントとしてDockerコマンドを実行することでDockerデーモンに指示を出す。<br />
+    DockerデーモンはLinuxの仮想マシン上で自動で起動する。<br />
+    winsowsやMacOS上で動作させる場合には、内部的にLinuxの仮想マシンが起動して、Linuxコンテナを起動して動作する。<br />
+    この仮想マシンには軽量なLinuxOSであるTiny Core LinuxというOSが使用されている。<br />
+    仮想化ソフトウェアはインストールしたDockerソフトウェアによって異なる。
+  </p>
+
+  <ul>
+    <li>Mac向けのDocker Desktop：MacOSに含まれるHyper Kit</li>
+    <li>Windows向けのDocker Desktop：Hyper-V(ハイパーバイザー)</li>
+    <li>Docker Toolbox：Virtual Box</li>
+  </ul>
+
+  <p>
+    サーバー上で動作させる場合には直接linuxのホストOS上でDockerを使用するのが一般的だが、PCで動作するDockerの場合にはこのような構成になっている。<br />
+    そのため、Windows OSやMac OS上でLinuxコンテナを起動できる。
+  </p>
 
 </body>
 
