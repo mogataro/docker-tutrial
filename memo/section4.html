@@ -137,6 +137,8 @@
 
   <h2>whalesayコンテナの実行とDockerイメージダウンロードの動作</h2>
 
+  <h3>halesayコンテナの実行</h3>
+
   <p>whalesayイメージはDocker社が作成したイメージでクジラのアスキーアートに好きな言葉を喋らせることができるチュートリアル用のイメージです。</p>
 
   <pre><code>$ docker run docker/whalesay cowsay hellow!</code></pre>
@@ -166,7 +168,7 @@
     これらのメッセージの後にダウンロードしたイメージからコンテナが作成されdocker runコマンドに渡した<code>cowsay Hello!</code>のコマンドが実行され、コマンドの結果が表示されます。
   </p>
 
-  <h2>ローカルにダウンロード済みのイメージ一覧を表示するコマンド</h2>
+  <h3>ローカルにダウンロード済みのイメージ一覧を表示するコマンド</h3>
 
   <p><code>$ docker images</code>と打つとイメージ一覧を表示できます。</p>
 
@@ -175,6 +177,226 @@
     REPOSITORY        TAG       IMAGE ID       CREATED       SIZE
     docker/whalesay   latest    6b362a9f73eb   6 years ago   247MB
   </code></pre>
+
+  <h3>イメージのタグ付けコマンド</h3>
+
+  <p>イメージは<code>docker tag</code>コマンドを使用することで任意のイメージ名でタグ付けすることができます。</p>
+
+  <p>
+    <code>$ docker tag {元となるイメージ名} {新しいイメージ名}:{タグ名}</code>
+  </p>
+
+  <pre><code>
+    $ docker tag docker/whalesay my_whalesay
+    $ docker images
+    REPOSITORY        TAG       IMAGE ID       CREATED       SIZE
+    docker/whalesay   latest    6b362a9f73eb   6 years ago   247MB
+    my_whalesay       latest    6b362a9f73eb   6 years ago   247MB
+  </code></pre>
+
+  <p>
+    タグ付けと言いましたが、イメージ名も指定することができます。
+    これはエイリアスのようなもので新しくタグ付けされたイメージは元のイメージと全く同じイメージを指します。<br />
+    MAGE IDは変わっていないことが確認できます。
+  </p>
+
+  <p>
+    タグをつけていないためにlatestタグになっています。<br />
+    タグをつける場合は、新しいイメージ名の後にコロンで区切ってタグ名を書いて実行するだけです。
+  </p>
+
+  <pre><code>
+    $ docker tag docker/whalesay my_whalesay:ver1
+    $ docker images
+    REPOSITORY        TAG       IMAGE ID       CREATED       SIZE
+    docker/whalesay   latest    6b362a9f73eb   6 years ago   247MB
+    my_whalesay       latest    6b362a9f73eb   6 years ago   247MB
+    my_whalesay       ver1      6b362a9f73eb   6 years ago   247MB
+  </code></pre>
+
+  <h3>イメージの詳細情報を表示するコマンド</h3>
+
+  <p>イメージの詳細情報を表示するには<code>docker inspect</code>コマンドを使用します。</p>
+
+  <p>
+    <code>$ docker inspect {対象になるイメージ名 or イメージID}</code>
+  </p>
+
+  <pre><code>
+    $ docker inspect my_whalesay
+
+    [
+      {
+        "Id": "sha256:6b362a9f73eb8c33b48c95f4fcce1b6637fc25646728cf7fb0679b2da273c3f4",
+        "RepoTags": [
+          "docker/whalesay:latest",
+          "my_whalesay:latest",
+          "my_whalesay:ver1"
+        ],
+        "RepoDigests": [
+          "docker/whalesay@sha256:178598e51a26abbc958b8a2e48825c90bc22e641de3d31e18aaf55f3258ba93b"
+        ],
+        "Parent": "",
+        "Comment": "",
+        "Created": "2015-05-25T22:04:23.303454458Z",
+        "Container": "5460b2353ce4e2b3e3e81b4a523a61c5adc238ae21d3ec3a5774674652e6317f",
+        "ContainerConfig": {
+          "Hostname": "9ec8c01a6a48",
+          "Domainname": "",
+          "User": "",
+          "AttachStdin": false,
+          "AttachStdout": false,
+          "AttachStderr": false,
+          "Tty": false,
+          "OpenStdin": false,
+          "StdinOnce": false,
+          "Env": [
+              "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+          ],
+          "Cmd": [
+              "/bin/sh",
+              "-c",
+              "#(nop) ENV PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+          ],
+          "Image": "5d5bd9951e26ca0301423625b19764bda914ae39c3f2bfd6f1824bf5354d10ee",
+          "Volumes": null,
+          "WorkingDir": "/cowsay",
+          "Entrypoint": null,
+          "OnBuild": [],
+          "Labels": {}
+        },
+        "DockerVersion": "1.6.0",
+        "Author": "",
+        "Config": {
+          "Hostname": "9ec8c01a6a48",
+          "Domainname": "",
+          "User": "",
+          "AttachStdin": false,
+          "AttachStdout": false,
+          "AttachStderr": false,
+          "Tty": false,
+          "OpenStdin": false,
+          "StdinOnce": false,
+          "Env": [
+              "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+          ],
+          "Cmd": [
+              "/bin/bash"
+          ],
+          "Image": "5d5bd9951e26ca0301423625b19764bda914ae39c3f2bfd6f1824bf5354d10ee",
+          "Volumes": null,
+          "WorkingDir": "/cowsay",
+          "Entrypoint": null,
+          "OnBuild": [],
+          "Labels": {}
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 247049019,
+        "VirtualSize": 247049019,
+        "GraphDriver": {
+          "Data": {
+              "LowerDir": "/var/lib/docker/overlay2/3f3b4c6143c3af55053677ce08ce90ee7c290c5394ee4ff31e8b2c430ac3e09c/diff:/var/lib/docker/overlay2/884e98d621b9bdaf14d854f7929e8317fe166961af1f141bfdf51d82e9897004/diff:/var/lib/docker/overlay2/b48cf5ba8dc6529ac5eac9ac4e012310fc82e0719e0e2372e63b35ebbe38e9bc/diff:/var/lib/docker/overlay2/adaf288ea3f243848d4f8b44054e5524acda81f600f4b61185cf6c5b9b2069a0/diff:/var/lib/docker/overlay2/6ec282559be2a8040bdd109264c87a6049edccb13670e9809491161738d66a5e/diff:/var/lib/docker/overlay2/4c4f3423775701b38d98f4736ade7ae1d45d8d5fbfd4f56b007ca219155bfe61/diff:/var/lib/docker/overlay2/7cf5e8f2655cf6dda57d6f7bb73b935bffacff54453a50c5c12c6556c261f2b9/diff:/var/lib/docker/overlay2/bbaa864b8f7dbedae04adb34643b65e33ab3b22135f22e637e03555f04b7ce87/diff:/var/lib/docker/overlay2/5d4f62398fe76f263e6646f5b2ff31bf5c8140f6bad45b7527c444a9abaeedfb/diff",
+              "MergedDir": "/var/lib/docker/overlay2/cffb1e0d92f52559b879bee1912707f4c3d672f2dc5374e4b051432d69ead661/merged",
+              "UpperDir": "/var/lib/docker/overlay2/cffb1e0d92f52559b879bee1912707f4c3d672f2dc5374e4b051432d69ead661/diff",
+              "WorkDir": "/var/lib/docker/overlay2/cffb1e0d92f52559b879bee1912707f4c3d672f2dc5374e4b051432d69ead661/work"
+          },
+          "Name": "overlay2"
+        },
+        "RootFS": {
+          "Type": "layers",
+          "Layers": [
+              "sha256:1154ba695078d29ea6c4e1adb55c463959cd77509adf09710e2315827d66271a",
+              "sha256:528c8710fd95f61d40b8bb8a549fa8dfa737d9b9c7c7b2ae55f745c972dddacd",
+              "sha256:37ee47034d9b78f10f0c5ce3a25e6b6e58997fcadaf5f896c603a10c5f35fb31",
+              "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+              "sha256:b26122d57afa5c4a2dc8db3f986410805bc8792af3a4fa73cfde5eed0a8e5b6d",
+              "sha256:091abc5148e4d32cecb5522067509d7ffc1e8ac272ff75d2775138639a6c50ca",
+              "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+              "sha256:d511ed9e12e17ab4bfc3e80ed7ce86d4aac82769b42f42b753a338ed9b8a566d",
+              "sha256:d061ee1340ecc8d03ca25e6ca7f7502275f558764c1ab46bd1f37854c74c5b3f",
+              "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+          ]
+        },
+        "Metadata": {
+          "LastTagTime": "2021-12-04T04:29:01.6633711Z"
+        }
+      }
+    ]
+  </code></pre>
+
+  <p>表示された情報の中にはdockerコンテナの設定情報として「ホスト名」「環境変数」「コンテナ起動時に実行されるコマンド」「コマンド実行時のディレクトリの情報」などがあります。<br />
+    その他にもOSの情報やサイズ、ファイルシステムの情報なども表示されています。
+  </p>
+
+  <h3>Dockerイメージを削除コマンド</h3>
+
+  <p>Dockerイメージを削除するには<code>docker rmi</code>コマンドを使用します。</p>
+
+  <p>
+    <code>$ docker rmi {対象になるイメージ名 or イメージID}:{タグ名}</code>
+  </p>
+
+  <p>
+    削除対象はイメージ名かイメージIDで指定しますが、すでにそのイメージを使用して作られたコンテナが存在する場合は、コンテナを削除してからイメージを削除するか、強制削除のフラグである<code>-f</code>をつける必要があります。
+  </p>
+
+  <pre><code>
+    $ docker rmi docker/whalesay
+    Untagged: docker/whalesay:latest
+    Untagged: docker/whalesay@sha256:178598e51a26abbc958b8a2e48825c90bc22e641de3d31e18aaf55f3258ba93b
+    
+    $ docker images
+    REPOSITORY    TAG       IMAGE ID       CREATED       SIZE
+    my_whalesay   latest    6b362a9f73eb   6 years ago   247MB
+    my_whalesay   ver1      6b362a9f73eb   6 years ago   247MB
+  </code></pre>
+
+  <p>docker/whalesayのlatestタグのイメージが一覧からなくなっています。<br />
+    イメージの削除もタグ名を付けなければlatestタグのものが削除されます。
+  </p>
+
+  <h3>イメージを取得するコマンド</h3>
+
+  <p>
+    <code>$ docker pull {対象になるイメージ名}:{タグ名}</code>
+  </p>
+
+  <pre><code>
+    $ docker pull docker/whalesay
+
+    Using default tag: latest
+    latest: Pulling from docker/whalesay
+    Image docker.io/docker/whalesay:latest uses outdated schema1 manifest format. Please upgrade to a schema2 image for better future compatibility. More information at https://docs.docker.com/registry/spec/deprecated-schema-v1/
+    e190868d63f8: Already exists 
+    909cd34c6fd7: Already exists 
+    0b9bfabab7c1: Already exists 
+    a3ed95caeb02: Already exists 
+    00bf65475aba: Already exists 
+    c57b6bcc83e3: Already exists 
+    8978f6879e2f: Already exists 
+    8eed3712d2cf: Already exists 
+    Digest: sha256:178598e51a26abbc958b8a2e48825c90bc22e641de3d31e18aaf55f3258ba93b
+    Status: Downloaded newer image for docker/whalesay:latest
+    docker.io/docker/whalesay:latest
+
+    $ docker images
+    REPOSITORY        TAG       IMAGE ID       CREATED       SIZE
+    my_whalesay       latest    6b362a9f73eb   6 years ago   247MB
+    my_whalesay       ver1      6b362a9f73eb   6 years ago   247MB
+    docker/whalesay   latest    6b362a9f73eb   6 years ago   247MB
+  </code></pre>
+
+  <p>先ほど削除したdocker/whalesayイメージが復活していることが確認できます。<br />
+    docker/whalesayイメージをPullした際にイメージの全てのレイヤーが「Already
+    exsists」になっているのは、「my_whalesay」という名前で「docker/whalesay」と全く同じレイヤーを持つイメージがローカルに存在するためです。
+  </p>
+
+
+
+
+
+
 
 
 </body>
