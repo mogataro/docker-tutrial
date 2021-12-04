@@ -5,6 +5,9 @@
 
   <h1>Dockerコンテナの実行</h1>
 
+  <p>この記事はUdemyの<a href="https://www.udemy.com/course/docker-k/" target="_blank">「ゼロからはじめる
+      Dockerによるアプリケーション実行環境構築」</a>受講時の個人的なメモ書きです。</p>
+
   <h2>hello-worldコンテナの実行と動作の解説</h2>
 
   <p>ターミナルから以下のコマンドを実行する</p>
@@ -133,6 +136,46 @@
   </p>
 
   <h2>whalesayコンテナの実行とDockerイメージダウンロードの動作</h2>
+
+  <p>whalesayイメージはDocker社が作成したイメージでクジラのアスキーアートに好きな言葉を喋らせることができるチュートリアル用のイメージです。</p>
+
+  <pre><code>$ docker run docker/whalesay cowsay hellow!</code></pre>
+
+  <p>
+    イメージ名は<code>docker/whalesay</code>で、タグ名は指定していないのでlatestタグが使用されます。<br />
+    <code>cowsay hello!</code>の部分はwhalesayコンテナの内部で実行するコマンドです。<br />
+    このようにイメージの後ろにコマンドを繋げることでコンテナが立ち上がった後にコマンドを実行することができます。<br />
+    コマンドを渡した際の動作はイメージの作られ方によって微妙に異なります。<br />
+    cowsayというプログラムはもともと牛のアスキーアートに吹き出しをつけて好きな言葉をしゃべらせて遊べるアプリケーションで、それをクジラのアスキーアートに改良したものがこのイメージに入っています。
+  </p>
+
+  <p>whalesayコンテナの実行結果</p>
+  <div>
+    <img src="img/docker_006.png" alt="whalesayコンテナの実行結果のスクリーンショット" title="whalesayコンテナの実行結果">
+  </div>
+
+  <p>
+    <code>Unable to find image</code>という部分は今回指定しているdocker/whalesayのlatestタグのイメージがローカルに存在しないことを表しています。<br />
+    <code>latest: Pulling from docker/whalesay</code>の部分はlatestタグのイメージをdocker/whalesayリポジトリからPull(イメージを取得)しているということを表しています。<br />
+    <code>e190868d63f8: Pull complete</code>などのランダムな文字列と<code>Pull complete</code>と記載された各行については、docker/whalesayイメージの各レイヤーと取得状況のことです。<br />
+    もし対象のイメージを持っていない場合でも一部ローカルにそのイメージのレイヤー情報を持っている場合は足りないレイヤーだけがダウンロードされます。<br />
+    取得しようとしているイメージが他のイメージと共通する親イメージを継承していた場合などに部分的にローカルにレイヤーが取得済みである場合があります。<br />
+    今回はwhalesayイメージで使用されているレイヤーの中で取得済みのレイヤーはないので全てダウンロードされます。<br />
+    <code>Digest:</code>と記載されている部分はイメージのデータをsha256でハッシュ化したもので、イメージごとに一意となる値で、イメージの内容が変更された場合はこの値も変わります。<br />
+    <code>Status:</code>と記載されている部分はイメージのPullの結果がどうなったかを表すメッセージが表示されます。<br />
+    これらのメッセージの後にダウンロードしたイメージからコンテナが作成されdocker runコマンドに渡した<code>cowsay Hello!</code>のコマンドが実行され、コマンドの結果が表示されます。
+  </p>
+
+  <h2>ローカルにダウンロード済みのイメージ一覧を表示するコマンド</h2>
+
+  <p><code>$ docker images</code>と打つとイメージ一覧を表示できます。</p>
+
+  <pre><code>
+    $ docker images
+    REPOSITORY        TAG       IMAGE ID       CREATED       SIZE
+    docker/whalesay   latest    6b362a9f73eb   6 years ago   247MB
+  </code></pre>
+
 
 </body>
 
